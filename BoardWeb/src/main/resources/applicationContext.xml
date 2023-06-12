@@ -3,19 +3,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-						http://www.springframework.org/schema/beans/spring-beans.xsd
-						http://www.springframework.org/schema/context 
-						http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	<context:component-scan
-		base-package="com.springbook.biz" />
+		base-package="com.springbook.biz">
+	</context:component-scan>
 
-	<bean id="userService"
-		class="com.springbook.biz.user.impl.UserServiceImpl">
-	<property name="userDAO" ref="userDAO" />
-</bean>
-
-	<bean id="userDAO" class="com.springbook.biz.user.impl.UserDAO" />
-
-
+	<bean id="log" class="com.springbook.biz.common.LogAdvice"></bean>
+	
+	<aop:config>
+		<aop:pointcut  id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
+		<aop:pointcut  id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
+		
+		
+		<aop:aspect ref="log">
+			<aop:before pointcut-ref="getPointcut" method="printLog" />
+		</aop:aspect>
+	
+	</aop:config>
 </beans>

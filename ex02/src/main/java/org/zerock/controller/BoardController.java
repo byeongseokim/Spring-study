@@ -64,5 +64,18 @@ public class BoardController {
 		}
 		return "redirect:/board/list";
 	}
+	
+	// post 방식으로 처리하지만, 입력받아야 하므로 GET 방식 추가
+	@GetMapping("/register")
+	public void register() {
+		
+	}
+	
+	@GetMapping("/get")
+	public void get(@RequestParam("bno") Long bno, Model model) {
+		
+		log.info("/get");
+		model.addAttribute("board", service.get(bno));
+	}
 
 }

@@ -23,7 +23,7 @@
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
-							<th>#번호</th>
+							<th>번호</th>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
@@ -34,6 +34,8 @@
 					<c:forEach items="${list}" var="board">
 						<tr>
 							<td><c:out value="${board.bno}" />
+							<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
+							<c:out value="${board.title }"/></a></td>
 							<td><c:out value="${board.title}" />
 							<td>< c:out value="${board.writer}" />
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
@@ -61,8 +63,8 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save
-									changes</button>
+								<!-- <button type="button" class="btn btn-primary">Save
+									changes</button> -->
 							</div>
 						</div>
 						<!-- /.modal-content -->
@@ -71,7 +73,7 @@
 				</div>
 				<!-- /.modal -->
 				
-				                            <!-- Modal -->
+<!-- 				                            Modal
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -87,11 +89,11 @@
                                             <button type="button" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
-                                    <!-- /.modal-content -->
+                                    /.modal-content
                                 </div>
-                                <!-- /.modal-dialog -->
+                                /.modal-dialog
                             </div>
-                            <!-- /.modal -->
+                            /.modal -->
 
 
 
@@ -107,11 +109,14 @@
             	
             	checkModal(result);
             	
-            	
-            	function checkModal(result) {            	
-            		if (result === '') {
+            	history.replaceState({},null,null);
+                      	
+            	function checkModal(result) {
+            		
+            		if (result === '' || history.state) {
             			return;
-					}            		
+					}          
+            		
             		if (parseInt(result) > 0) {
 						$(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");
 					}

@@ -7,6 +7,7 @@
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
 <![CDATA[
 select * from tbl_board where bno > 0
+
 ]]>
 	</select>
 
@@ -26,6 +27,7 @@ select * from tbl_board where bno > 0
 	
 	<select id="read" resultType="org.zerock.domain.BoardVO">
 		select * from tbl_board where bno = #{bno}
+		<!-- SELECT bno FROM TBL_BOARD ORDER BY #{bno} ASC -->
 	</select>
 
 	<delete id="delete">

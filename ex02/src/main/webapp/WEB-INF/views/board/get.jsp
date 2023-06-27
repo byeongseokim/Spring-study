@@ -47,12 +47,12 @@
 
 				<form id='operForm' action="/board/modify" method="get">
 					<input type='hidden' id='bno' name='bno'
-						value='<c:out value="${board.bno }"/>'>
+						value='<c:out value="${board.bno }"/>'> 
 				</form>
 
 
 
-			</div>
+			
 
 
 		</div>

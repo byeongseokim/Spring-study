@@ -36,7 +36,7 @@ public class BoardController {
 		log.info("list: " + cri);
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, 123));
-
+		//PageDTO를 구성하기 위해서 전체 데이터 수가 필요한데, 아직 그 처리가 이루어지지 않았으므로 임의 값으로 123을 지정함
 	}
 
 	// POST 방식으로 처리

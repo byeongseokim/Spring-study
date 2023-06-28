@@ -5,7 +5,7 @@
 <%@include file="../includes/header.jsp"%>
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tables</h1>
+		<h1 class="page-header">게시판</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -13,8 +13,9 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Board List Page
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">Reguster New Board</button>
+			<div class="panel-heading">
+				목록 페이지
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">새 게시물 등록</button>
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
@@ -35,7 +36,8 @@
 						<tr>
 							<td><c:out value="${board.bno}" />
 							<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
-							<c:out value="${board.title }"/></a></td>
+									<c:out value="${board.title }" />
+							</a></td>
 							<%-- <td><c:out value="${board.title}" /> --%>
 							<td>< c:out value="${board.writer}" />
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
@@ -43,11 +45,33 @@
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.updateDate}" /></td>
 						</tr>
-					</c:forEach>
 
-					</tbody>
+
+						</tbody>
+					</c:forEach>
 				</table>
 				<!-- table태그의 끝 -->
+				
+				<div class='text-center'> <!-- 페이지 번호 가운데로 만들기 -->
+				<ul class="pagination">
+					
+					<c:if test="${pageMaker.prev}">
+					<li class="paginate_button previous"><a href="#">이전</a>
+					</li>
+					</c:if>
+					
+					<c:forEach var="num" begin="${pageMaker.startPage}"
+					end="${pageMaker.endPage}">
+					<li class="paginate_button next"><a href="#">${num}</a></li>
+					</c:forEach>
+					
+					<c:if test="${pageMaker.next}">
+					<li class="paginate_button next"><a href="#">다음</a></li>
+					</c:if>
+					</ul>
+				</div>
+				<!-- end Pagination -->
+				</div>
 
 				<!-- Modal 추가-->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -72,8 +96,8 @@
 					<!-- /.modal-dialog -->
 				</div>
 				<!-- /.modal -->
-				
-<!-- 				                            Modal
+
+				<!-- 				                            Modal
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -102,37 +126,38 @@
 	</div>
 </div>
 
-				<script type="text/javascript">     
-            $(document).ready(function() { 
-            	
-            	var result = '<c:out value="${result}"/>';
-            	
-            	checkModal(result);
-            	
-            	history.replaceState({},null,null);
-                      	
-            	function checkModal(result) {
-            		
-            		if (result === '' || history.state) {
-            			return;
-					}          
-            		
-            		if (parseInt(result) > 0) {
-						$(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+
+				var result = '<c:out value="${result}"/>';
+
+				checkModal(result);
+
+				history.replaceState({}, null, null);
+
+				function checkModal(result) {
+
+					if (result === '' || history.state) {
+						return;
 					}
-            		
-            		$("#myModal").modal("show");					
+
+					if (parseInt(result) > 0) {
+						$(".modal-body").html(
+								"게시글 " + parseInt(result) + " 번이 등록되었습니다.");
+					}
+
+					$("#myModal").modal("show");
 				}
-            	
-            	$("#regBtn").on("click", function(){
-            		
-            		self.location ="/board/register";
-					
+
+				$("#regBtn").on("click", function() {
+
+					self.location = "/board/register";
+
 				});
-            	
-			});            
-            
-            </script>
+
+			});
+</script>
 
 
 

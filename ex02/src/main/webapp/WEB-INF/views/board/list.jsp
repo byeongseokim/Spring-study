@@ -15,7 +15,8 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				목록 페이지
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">새 게시물 등록</button>
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">새
+					게시물 등록</button>
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
@@ -35,8 +36,8 @@
 					<c:forEach items="${list}" var="board">
 						<tr>
 							<td><c:out value="${board.bno}" />
-							<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
-									<c:out value="${board.title }" />
+							<td><a class="move" href='<c:out value="${board.bno}"/>'>
+									<c:out value="${board.title}" />
 							</a></td>
 							<%-- <td><c:out value="${board.title}" /> --%>
 							<td>< c:out value="${board.writer}" />
@@ -51,53 +52,67 @@
 					</c:forEach>
 				</table>
 				<!-- table태그의 끝 -->
-				
-				<div class='text-center'> <!-- 페이지 번호 가운데로 만들기 -->
-				<ul class="pagination">
+
+				<div class='text-center'>
+					<!-- 페이지 번호 가운데로 만들기 -->
 					
-					<c:if test="${pageMaker.prev}">
-					<li class="paginate_button previous"><a href="#">이전</a>
-					</li>
-					</c:if>
-					
-					<c:forEach var="num" begin="${pageMaker.startPage}"
-					end="${pageMaker.endPage}">
-					<li class="paginate_button next"><a href="#">${num}</a></li>
-					</c:forEach>
-					
-					<c:if test="${pageMaker.next}">
-					<li class="paginate_button next"><a href="#">다음</a></li>
-					</c:if>
+					<ul class="pagination">
+						
+						<%-- <c:if test="${pageMaker.prev}">
+							<li class="paginate_button first"><a
+								href="${pageMaker.firstPage}">처음으로</a></li>
+						</c:if>	 --%>
+							
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous"><a
+								href="${pageMaker.startPage -1}">이전</a></li>
+						</c:if>
+
+						<c:forEach var="num" begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}">
+							<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":""} "><a
+								href="${num}">${num}</a></li>
+						</c:forEach>
+
+						<c:if test="${pageMaker.next}">
+							<li class="paginate_button next"><a
+								href="${pageMaker.endPage +1}">다음</a></li>
+						</c:if>
 					</ul>
 				</div>
 				<!-- end Pagination -->
-				</div>
+			</div>
 
-				<!-- Modal 추가-->
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-					aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-							</div>
-							<div class="modal-body">처리가 완료되었습니다.</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-								<!-- <button type="button" class="btn btn-primary">Save
-									changes</button> -->
-							</div>
+			<form id="actionForm" action="/board/list" method="get">
+				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+			</form>
+
+			<!-- Modal 추가-->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
 						</div>
-						<!-- /.modal-content -->
+						<div class="modal-body">처리가 완료되었습니다.</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<!-- <button type="button" class="btn btn-primary">Save
+									changes</button> -->
+						</div>
 					</div>
-					<!-- /.modal-dialog -->
+					<!-- /.modal-content -->
 				</div>
-				<!-- /.modal -->
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
 
-				<!-- 				                            Modal
+			<!-- 				                            Modal
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -121,42 +136,76 @@
 
 
 
-			</div>
 		</div>
 	</div>
 </div>
 
+
 <script type="text/javascript">
-	$(document).ready(
-			function() {
+	$(document)
+			.ready(
+					function() {
 
-				var result = '<c:out value="${result}"/>';
+						var result = '<c:out value="${result}"/>';
 
-				checkModal(result);
+						checkModal(result);
 
-				history.replaceState({}, null, null);
+						history.replaceState({}, null, null);
 
-				function checkModal(result) {
+						function checkModal(result) {
 
-					if (result === '' || history.state) {
-						return;
-					}
+							if (result === '' || history.state) {
+								return;
+							}
 
-					if (parseInt(result) > 0) {
-						$(".modal-body").html(
-								"게시글 " + parseInt(result) + " 번이 등록되었습니다.");
-					}
+							if (parseInt(result) > 0) {
+								$(".modal-body").html(
+										"게시글 " + parseInt(result)
+												+ " 번이 등록되었습니다.");
+							}
 
-					$("#myModal").modal("show");
-				}
+							$("#myModal").modal("show");
+						}
 
-				$("#regBtn").on("click", function() {
+						$("#regBtn").on("click", function() {
 
-					self.location = "/board/register";
+							self.location = "/board/register";
 
-				});
+						});
 
-			});
+						var actionForm = $("#actionForm");
+
+						$(".paginate_button a").on(
+								"click",
+								function(e) {
+
+									e.preventDefault();
+
+									console.log('click');
+
+									actionForm.find("input[name='pageNum']")
+											.val($(this).attr("href"));
+									actionForm.submit();
+								});
+
+						$(".move")
+								.on(
+										"click",
+										function(e) {
+
+											e.preventDefault();
+											actionForm
+													.append("<input type='hidden' name='bno' value='"
+															+ $(this).attr(
+																	"href")
+															+ "'>");
+											actionForm.attr("action",
+													"/board/get");
+											actionForm.submit();
+
+										});
+
+					});
 </script>
 
 

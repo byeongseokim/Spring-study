@@ -15,7 +15,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				목록 페이지
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">새
+				<button id='regBtn' type="button" class="btn btn-xs pull-right btn" style="background-color: rgb(35, 150, 255)" >새
 					게시물 등록</button>
 			</div>
 			<!-- /.panel-heading -->

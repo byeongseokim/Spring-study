@@ -23,6 +23,8 @@
 				<!-- 추가 -->
 				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
 				<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+				<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
 				
 					<div class="form-group">
 						<label>번호</label> <input class="form-control" name="bno"
@@ -88,14 +90,28 @@ $(document).ready(function() {
 		
 		if(operation === 'remove'){
 			formObj.attr("action", "/board/remove");
+			
 			}else if(operation === 'list'){
 				//move to list
 				formObj.attr("action", "/board/list").attr("method","get");
+				
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amountTag']").clone();
+				var keywordTag = $("input[name='keywordTag']").clone();
+				var typeTag = $("input[name='typeTag']").clone();
+				
 				formObj.empty();
+				
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
+				formObj.append(keywordTag);
+				formObj.append(typeTag);
 			}
 			formObj.submit();
 		
 	});
+	
+	
 });
 </script>
 

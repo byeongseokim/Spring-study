@@ -36,7 +36,7 @@ public class BoardController {
 
 		log.info("list: " + cri);
 		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri, 9999));
+		model.addAttribute("pageMaker", new PageDTO(cri, 123));
 		//PageDTO를 구성하기 위해서 전체 데이터 수가 필요한데, 아직 그 처리가 이루어지지 않았으므로 임의 값으로 123을 지정함
 	}
 
@@ -56,32 +56,27 @@ public class BoardController {
 
 	// get방식으로 접근 하지만 post 방식으로 동작하므로 @postMapping을 이용해서 처리
 	@PostMapping("/modify")
-	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String modify(BoardVO board, Criteria cri, RedirectAttributes rttr) {
 		log.info("modify: " + board);
 
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
+		return "redirect:/board/list" + cri.getListLink();
 		
-		return "redirect:/board/list";
 	}
 
 	// 삭제는 반드시 POST 방식으로만 처리함
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
 
 		log.info("remove..." + bno);
 		if (service.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		
-		return "redirect:/board/list";
+				
+		return "redirect:/board/list" + cri.getListLink();
 	}
 
 	// post 방식으로 처리하지만, 입력받아야 하므로 GET 방식 추가

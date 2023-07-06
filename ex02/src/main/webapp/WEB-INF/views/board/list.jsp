@@ -39,7 +39,7 @@
 							<td><a class="move" href='<c:out value="${board.bno}"/>'>
 									<c:out value="${board.title}" />
 							</a></td>
-							<%-- <td><c:out value="${board.title}" /> --%>
+
 							<td>< c:out value="${board.writer}" />
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.regdate}" /></td>
@@ -79,10 +79,6 @@
 
 					<ul class="pagination">
 
-						<%-- <c:if test="${pageMaker.prev}">
-							<li class="paginate_button first"><a
-								href="${pageMaker.firstPage}">처음으로</a></li>
-						</c:if>	 --%>
 
 						<c:if test="${pageMaker.prev}">
 							<li class="paginate_button previous"><a
@@ -124,7 +120,7 @@
 						<div class="modal-body">처리가 완료되었습니다.</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
+								data-dismiss="modal">닫기</button>
 							<!-- <button type="button" class="btn btn-primary">Save
 									changes</button> -->
 						</div>
